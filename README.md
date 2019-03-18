@@ -1,1 +1,1 @@
-# Prog-Funcional-Exercicios
+# Exercicios de programação funcional (Haskell)
