@@ -20,21 +20,29 @@ goldbach = \x -> [(a,b) | a <- filter isPrime [2..x-1], b <- filter isPrime [2..
 --consulte suas implementacoes anteriores para a documentacao dessas funcoes
 meuLast = \x -> case x of
                 [] -> error "Lisa vazia!"
-                x -> if (length (tail x) == 0) then head x else meuLast (tail x)
-penultimo xs = undefined
-elementAt i xs = undefined
-meuLength xs = undefined
-meuReverso xs = undefined
-isPalindrome xs = undefined
-compress xs = undefined
-compact xs = undefined
-encode xs = undefined
-split xs i = undefined
-slice xs imin imax = undefined
-insertAt el pos xs = undefined
-sort xs = undefined
-mySum xs = undefined
-maxList xs = undefined
-buildPalindrome xs = undefined
-mean xs = undefined
+                x -> if (null (tail x)) then head x else meuLast (tail x)
+penultimo = \x -> case x of
+                [] ->  error "Lista sem penultimo!"
+                x -> if (null (tail x)) then  error "Lista sem penultimo!" else if (length (tail (tail x)) == 0) then head x else penultimo (tail x)
+elementAt = \i xs -> if (i == 1) then head xs else elementAt (i-1) (tail xs) 
+meuLength = \xs -> if (null xs) then 0 else 1 + meuLength (tail xs)
+meuReverso = \xs -> if (null xs) then xs else meuReverso (tail xs) ++ [head xs] 
+isPalindrome = \(x:xs) -> if (null (x:xs) || null xs) then True else if ([x] ++ [1] == [last xs] ++ [1]) then isPalindrome (init xs) else False
+compress' = \ys xs -> if (null xs) then ys else if (elem (head xs) (tail xs)) then compress (remove (head xs) ys) else compress' ys (tail xs)
+compress = \xs -> compress' xs xs
+compact = \xs -> if (null xs || xs == [head xs]) then xs else if (head (tail xs) == head xs) then (head xs):(compact (tail xs)) else if (not (elem (head xs) (tail xs))) then (head xs):(compact (tail xs)) else (head xs):(compact ([(head xs)] ++ remove (head xs) (tail xs)))
+remove = \e es -> if([e] ++ [1] == [head es] ++ [1]) then tail es else (head es):(remove e (tail es))
+remove_n_times = \qtd x xs -> if (qtd == 0) then xs else remove_n_times (qtd-1) x (remove x xs)
+encode = \xs -> if (null xs) then [] else ((head xs), length (filter (== (head xs)) xs)):(encode (remove_n_times (length (filter (== (head xs)) xs)) (head xs) xs))
+split = \xs i -> [take i xs] ++ [drop i xs]
+slice = \xs imin imax -> drop (imin - 1) (take imax xs)
+insertAt = \el pos xs -> (take (pos-1) xs) ++ [el] ++ drop (pos-1) xs
+minList = \xs -> if (null (tail xs)) then head xs else if ((head xs) < (minList (tail xs))) then (head xs) else minList (tail xs)
+sort = \xs -> if (null xs) then [] else (minList xs):(sort (remove (minList xs) xs))
+--mySum = \xs -> foldr (+) 0 xs     Erro de ambiguidade
+maxList = undefined
+buildPalindrome = \xs -> if (null xs) then xs else [head xs] ++ buildPalindrome (tail xs) ++ [head xs] 
+soma = \xs -> if (null xs) then 0 else (head xs) + soma (tail xs)
+tamanho = \xs -> if (null xs) then 0 else 1 + tamanho (tail xs)
+mean = \xs -> if (null xs) then 0 else if (null (tail xs)) then head xs else fst (soma xs, tamanho xs)/snd (soma xs, tamanho xs)
 myAppend xs ys = undefined
