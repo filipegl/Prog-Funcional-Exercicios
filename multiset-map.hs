@@ -66,7 +66,16 @@ minus bag1 bag2 = undefined
  - Testa se este Bag esta incluso em otherBag. Para todo elemento deste bag, sua quantidade
  - deve ser menor or igual a sua quantidade em otherBag.
 -}
-inclusion bag1 bag2 = undefined
+inclusion bag1 bag2
+  | null bag1 = True
+  | null bag2 = False
+  | (amount2 == 0) = False
+  | ((snd h1) > amount2) = False
+  | otherwise = inclusion t1 bag2
+  where list1 = Map.toList bag1
+        h1 = head list1
+        t1 = Map.fromList (tail list1)
+        amount2 = search (fst h1) bag2
 
 {-
  - Realiza a soma deste Bag com otherBag. A soma de dois bags contem os elementos dos dois bags com suas quantidades somadas. 
@@ -76,4 +85,4 @@ sum bag1 bag2 = Map.unionWith (+) bag1 bag2
 {-
  - Retorna a quantidade total de elementos no Bag
 -}
-size bag = Map.size bag
+size bag = Prelude.sum (Map.elems bag)
