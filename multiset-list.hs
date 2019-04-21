@@ -134,4 +134,5 @@ sum bag1 bag2
 {-
  - Retorna a quantidade total de elementos no Bag
 -}
-size bag = length bag
+size [] = 0
+size (x:xs) = snd x + size xs
