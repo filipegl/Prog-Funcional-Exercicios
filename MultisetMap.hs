@@ -7,7 +7,8 @@ module MultisetMap (
   minus,
   inclusion,
   MultisetMap.sum,
-  size
+  size,
+  fromList
 )
  where
 
@@ -86,3 +87,5 @@ sum bag1 bag2 = Map.unionWith (+) bag1 bag2
  - Retorna a quantidade total de elementos no Bag
 -}
 size bag = Prelude.sum (Map.elems bag)
+
+fromList list = Map.fromList list
